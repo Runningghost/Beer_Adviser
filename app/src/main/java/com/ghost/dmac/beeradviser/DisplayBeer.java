@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class DisplayBeer extends AppCompatActivity {
 
-    String url = "https://www.beerknurd.com/user";
+    String url = "https://www.beerknurd.com/user#";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
