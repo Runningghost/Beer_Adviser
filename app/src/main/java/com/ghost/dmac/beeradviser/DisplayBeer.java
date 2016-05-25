@@ -13,9 +13,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Dmac on 5/24/2016.
- */
+
 public class DisplayBeer extends AppCompatActivity {
 
     String url = "https://www.beerknurd.com/user";
@@ -33,8 +31,8 @@ public class DisplayBeer extends AppCompatActivity {
 
 
         // Given a URL, establishes an HttpUrlConnection and retrieves
-// the web page content as a InputStream, which it returns as
-// a string.
+        // the web page content as a InputStream, which it returns as
+        // a string.
         @Override
         protected String doInBackground(String... params) {
             InputStream is = null;

@@ -18,7 +18,6 @@ public class FindBeerActivity extends AppCompatActivity {
     public void onClickFindBeer(View view) {
         Intent intent = new Intent(this, DisplayBeer.class);
         startActivity(intent);
-
     }
 
 
