@@ -73,15 +73,15 @@ public class DisplayBeer extends AppCompatActivity {
 
 
 
-                Document log = Jsoup.connect(url)
+                Document log = Jsoup.connect(login)
                         //.cookie("Cookie",sessionId)
                         .userAgent(useragent)
                         .ignoreContentType(true)
                         .get();
 
 
-//                contentAsString = tasted.printNames(log.html());
-               contentAsString = loginForm.toString();
+                contentAsString = tasted.printNames(log.html());
+//               contentAsString = loginForm.toString();
 
                 // Makes sure that the InputStream is closed after the app is
                 // finished using it.
