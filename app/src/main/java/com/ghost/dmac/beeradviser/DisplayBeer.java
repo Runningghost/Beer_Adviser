@@ -43,6 +43,7 @@ public class DisplayBeer extends AppCompatActivity {
         // a string.
         @Override
         protected String doInBackground(String... params) {
+            parse tasted = new parse();
 
             String contentAsString = null;
             try {
@@ -50,29 +51,37 @@ public class DisplayBeer extends AppCompatActivity {
 
                String useragent = System.getProperty("http.agent");
 
-               Connection.Response loginForm = Jsoup.connect(url)
-                        .method(Connection.Method.GET)
-                        .execute();
+//               Connection.Response loginForm = Jsoup.connect(url)
+//                        .method(Connection.Method.GET)
+ //                       .execute();
 
-                Document document = Jsoup.connect(url)
+               // Document doc = loginForm.parse();
+                Connection.Response loginForm = Jsoup.connect(url)
+//                Document document = Jsoup.connect(url)
                         .userAgent(useragent)
                         .data("username", user.username)
                         .data("password", user.password)
-                        .data("op", "Log in")
-                        .post();
-               Map<String, String> sessionId = loginForm.cookies();
+                        .data("op", "Log+in")
+                        .data("form_build_id", "form-E6x907QMYIA4BUre26kq2hQnVYFxIsQb1ALF4LH7j4I")
+                        .data("form_id", "custom_login_form")
+//                        .post();
+                        .method(Connection.Method.POST)
+                        .execute();
+                Document doc = loginForm.parse();
+                String sessionId = loginForm.cookie("Set-Cookie");
+//               Map<String, String> sessionId = loginForm.cookies();
 
 
 
-                Document log = Jsoup.connect(login)
-                        .cookies(sessionId)
+                Document log = Jsoup.connect(url)
+                        //.cookie("Cookie",sessionId)
                         .userAgent(useragent)
                         .ignoreContentType(true)
                         .get();
 
 
-                contentAsString = log.text();
-
+//                contentAsString = tasted.printNames(log.html());
+               contentAsString = loginForm.toString();
 
                 // Makes sure that the InputStream is closed after the app is
                 // finished using it.
