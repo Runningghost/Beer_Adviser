@@ -4,9 +4,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
+import java.util.Map;
 
 
 public class DisplayBeer extends AppCompatActivity {
@@ -40,36 +46,41 @@ public class DisplayBeer extends AppCompatActivity {
 
 //               Connection.Response loginForm = Jsoup.connect(url)
 //                        .method(Connection.Method.GET)
- //                       .execute();
-/*
+//                        .execute();
+
                // Document doc = loginForm.parse();
                 Connection.Response loginForm = Jsoup.connect(url)
 //                Document document = Jsoup.connect(url)
-                        .userAgent(useragent)
+
                         .data("username", user.username)
                         .data("password", user.password)
                         .data("op", "Log+in")
-                        .data("form_build_id", "form-E6x907QMYIA4BUre26kq2hQnVYFxIsQb1ALF4LH7j4I")
+                        //.data("form_build_id", "??")
                         .data("form_id", "custom_login_form")
+                        .userAgent(useragent)
 //                        .post();
                         .method(Connection.Method.POST)
                         .execute();
-                //Document doc = loginForm.parse();
-                //String sessionId = loginForm.cookie("Set-Cookie");
-//               Map<String, String> sessionId = loginForm.cookies();
+                Document doc = loginForm.parse();
+//                String sessionId = loginForm.cookie("username");
+               Map<String, String> sessionId = loginForm.cookies();
 
-*/
 
-                Document log = Jsoup.connect(login)
-                        //.cookie("Cookie",sessionId)
+
+                Document log = Jsoup.connect("https://www.beerknurd.com/user#")
+                        .cookies(loginForm.cookies())
                         .userAgent(useragent)
                         .ignoreContentType(true)
+                        .timeout(3000)
                         .get();
 
 
-                contentAsString = tasted.printNames(log.html());
-//               contentAsString = loginForm.toString();
-
+//                contentAsString = tasted.printNames(log.html());
+//               contentAsString = String.valueOf(sessionId);
+                Elements userNum = log.select("link rel=\"shortlink\"[href]");
+//                String userNum = String.valueOf(log.body().className().e);
+//                contentAsString = String.valueOf(log.html());
+                contentAsString = String.valueOf(userNum);
                 // Makes sure that the InputStream is closed after the app is
                 // finished using it.
 
