@@ -28,4 +28,13 @@ public class parse {
         return second;
 
     }
+
+    public String userNum(String num) {
+        //String str1 = new String(num);
+        //int j = 75;//length of class
+        String str1 = num.substring(82);
+
+        return str1;
+
+    }
 }

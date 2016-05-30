@@ -17,8 +17,9 @@ import java.util.Map;
 
 public class DisplayBeer extends AppCompatActivity {
 
-    String url = "https://www.beerknurd.com/user#";
-    String login = "http://www.beerknurd.com/api/tasted/list_user/468012";
+    String url = "https://www.beerknurd.com/user";
+    String beer = "http://www.beerknurd.com/api/tasted/list_user/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,43 +45,41 @@ public class DisplayBeer extends AppCompatActivity {
 
                String useragent = System.getProperty("http.agent");
 
-//               Connection.Response loginForm = Jsoup.connect(url)
-//                        .method(Connection.Method.GET)
-//                        .execute();
 
-               // Document doc = loginForm.parse();
                 Connection.Response loginForm = Jsoup.connect(url)
-//                Document document = Jsoup.connect(url)
-
                         .data("username", user.username)
                         .data("password", user.password)
                         .data("op", "Log+in")
-                        //.data("form_build_id", "??")
                         .data("form_id", "custom_login_form")
                         .userAgent(useragent)
-//                        .post();
                         .method(Connection.Method.POST)
+                        .timeout(6000)
                         .execute();
-                Document doc = loginForm.parse();
-//                String sessionId = loginForm.cookie("username");
-               Map<String, String> sessionId = loginForm.cookies();
+//                Document doc = loginForm.parse();
+//               Map<String, String> sessionId = loginForm.cookies();
 
 
 
-                Document log = Jsoup.connect("https://www.beerknurd.com/user#")
+                Document log = Jsoup.connect(url)
                         .cookies(loginForm.cookies())
                         .userAgent(useragent)
-                        .ignoreContentType(true)
-                        .timeout(3000)
+                        .timeout(6000)
                         .get();
 
+                String userNum = tasted.userNum(log.body().className());
+//                String userNum = log.body().className();
+               Document tastedList = Jsoup.connect(beer + userNum)
+                       .ignoreContentType(true)
+                       .timeout(5000)
+                       .get();
 
-//                contentAsString = tasted.printNames(log.html());
+                contentAsString = tasted.printNames(tastedList.text());
 //               contentAsString = String.valueOf(sessionId);
-                Elements userNum = log.select("link rel=\"shortlink\"[href]");
-//                String userNum = String.valueOf(log.body().className().e);
-//                contentAsString = String.valueOf(log.html());
-                contentAsString = String.valueOf(userNum);
+//                Elements userNum = log.select("input#loaded_user");
+
+
+//                contentAsString = log.html();
+//                contentAsString = userNum;
                 // Makes sure that the InputStream is closed after the app is
                 // finished using it.
 
