@@ -22,7 +22,10 @@ public class parse {
         }
         String amount = Integer.toString(count) + '\n';
         beerList.insert(0, amount);
-        return String.valueOf(beerList);
+        String strReplace =  new String(String.valueOf(beerList));
+        String first = strReplace.replace("\\/", "/");
+        String second = first.replace("\\u0027", "'");
+        return second;
 
     }
 }

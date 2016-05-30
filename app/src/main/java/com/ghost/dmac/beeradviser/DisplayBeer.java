@@ -4,21 +4,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
-import org.json.JSONObject;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.TextNode;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 
 public class DisplayBeer extends AppCompatActivity {
@@ -47,14 +35,13 @@ public class DisplayBeer extends AppCompatActivity {
 
             String contentAsString = null;
             try {
-                //URL url = new URL(params[0]);
 
                String useragent = System.getProperty("http.agent");
 
 //               Connection.Response loginForm = Jsoup.connect(url)
 //                        .method(Connection.Method.GET)
  //                       .execute();
-
+/*
                // Document doc = loginForm.parse();
                 Connection.Response loginForm = Jsoup.connect(url)
 //                Document document = Jsoup.connect(url)
@@ -67,11 +54,11 @@ public class DisplayBeer extends AppCompatActivity {
 //                        .post();
                         .method(Connection.Method.POST)
                         .execute();
-                Document doc = loginForm.parse();
-                String sessionId = loginForm.cookie("Set-Cookie");
+                //Document doc = loginForm.parse();
+                //String sessionId = loginForm.cookie("Set-Cookie");
 //               Map<String, String> sessionId = loginForm.cookies();
 
-
+*/
 
                 Document log = Jsoup.connect(login)
                         //.cookie("Cookie",sessionId)
