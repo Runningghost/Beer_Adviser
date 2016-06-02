@@ -9,11 +9,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ghost.dmac.beeradviser.FindBeerActivity">
 
+
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="username"
+        android:layout_marginTop="18dp"
+        android:ems="20"
+        />
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/user"
+        android:text="password"
+        android:layout_marginTop="18dp"
+        android:ems="20"
+
+        />
     <Button
         android:id="@+id/find_beer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/pass"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"
         android:text="@string/find_beer"
