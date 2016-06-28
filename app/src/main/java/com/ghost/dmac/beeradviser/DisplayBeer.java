@@ -1,5 +1,6 @@
 package com.ghost.dmac.beeradviser;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,9 @@ public class DisplayBeer extends AppCompatActivity {
     String url = "https://www.beerknurd.com/user";
     String beer = "http://www.beerknurd.com/api/tasted/list_user/";
 
+    public static final String username = "username";
+    public static final String password = "password";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +34,10 @@ public class DisplayBeer extends AppCompatActivity {
 
     public class GetBeerInfo extends AsyncTask<String, String, String> {
         TextView beertaste = (TextView) findViewById(R.id.beer_tasted);
-        Login user = new Login();
+        Intent intent = getIntent();
+        String userText = intent.getStringExtra(username);
+        String passText = intent.getStringExtra(password);
+
 
 
         // Given a URL, establishes an HttpUrlConnection and retrieves
@@ -43,22 +50,19 @@ public class DisplayBeer extends AppCompatActivity {
             String contentAsString = null;
             try {
 
-               String useragent = System.getProperty("http.agent");
+
+                String useragent = System.getProperty("http.agent");
 
 
                 Connection.Response loginForm = Jsoup.connect(url)
-                        .data("username", user.username)
-                        .data("password", user.password)
+                        .data("username", userText)
+                        .data("password", passText)
                         .data("op", "Log+in")
                         .data("form_id", "custom_login_form")
                         .userAgent(useragent)
                         .method(Connection.Method.POST)
                         .timeout(6000)
                         .execute();
-//                Document doc = loginForm.parse();
-//               Map<String, String> sessionId = loginForm.cookies();
-
-
 
                 Document log = Jsoup.connect(url)
                         .cookies(loginForm.cookies())
@@ -74,8 +78,7 @@ public class DisplayBeer extends AppCompatActivity {
                        .get();
 
                 contentAsString = tasted.printNames(tastedList.text());
-//               contentAsString = String.valueOf(sessionId);
-//                Elements userNum = log.select("input#loaded_user");
+
 
 
 //                contentAsString = log.html();

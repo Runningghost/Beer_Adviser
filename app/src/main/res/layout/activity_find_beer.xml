@@ -15,10 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="username"
+        android:inputType="textPersonName"
+        android:hint="Username"
+        android:text=""
         android:layout_marginTop="18dp"
-        android:ems="20"
-        />
+        android:ems="20" />
 
     <EditText
         android:id="@+id/pass"
@@ -26,7 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/user"
-        android:text="password"
+        android:inputType="textWebPassword"
+        android:hint="Password"
+        android:text=""
         android:layout_marginTop="18dp"
         android:ems="20"
 
@@ -40,6 +43,8 @@
         android:layout_marginTop="37dp"
         android:text="@string/find_beer"
         android:onClick="onClickFindBeer"/>
+
+
 
 
 </RelativeLayout>
