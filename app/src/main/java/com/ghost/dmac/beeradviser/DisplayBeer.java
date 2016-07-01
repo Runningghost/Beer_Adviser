@@ -1,6 +1,7 @@
 package com.ghost.dmac.beeradviser;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,10 @@ public class DisplayBeer extends AppCompatActivity {
 
     public static final String username = "username";
     public static final String password = "password";
+    public static final String userid = "userid";
+    SharedPreferences settings= getPreferences(0);
+    SharedPreferences.Editor sauceruserId = settings.edit();
+    //String userNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class DisplayBeer extends AppCompatActivity {
         Intent intent = getIntent();
         String userText = intent.getStringExtra(username);
         String passText = intent.getStringExtra(password);
+        String userNum = intent.getStringExtra(userid);
 
 
 
@@ -47,33 +53,41 @@ public class DisplayBeer extends AppCompatActivity {
         protected String doInBackground(String... params) {
             parse tasted = new parse();
 
+
+
+
             String contentAsString = null;
             try {
 
-
-                String useragent = System.getProperty("http.agent");
-
-
-                Connection.Response loginForm = Jsoup.connect(url)
-                        .data("username", userText)
-                        .data("password", passText)
-                        .data("op", "Log+in")
-                        .data("form_id", "custom_login_form")
-                        .userAgent(useragent)
-                        .method(Connection.Method.POST)
-                        .timeout(6000)
-                        .execute();
+                if (!settings.contains("USER_ID")) {
+                    String useragent = System.getProperty("http.agent");
 
 
-                Document log = Jsoup.connect(url)
-                        .cookies(loginForm.cookies())
-                        .userAgent(useragent)
-                        .timeout(6000)
-                        .get();
+                    Connection.Response loginForm = Jsoup.connect(url)
+                            .data("username", userText)
+                            .data("password", passText)
+                            .data("op", "Log+in")
+                            .data("form_id", "custom_login_form")
+                            .userAgent(useragent)
+                            .method(Connection.Method.POST)
+                            .timeout(6000)
+                            .execute();
 
-                String userNum = tasted.userNum(log.body().className());
+
+                    Document log = Jsoup.connect(url)
+                            .cookies(loginForm.cookies())
+                            .userAgent(useragent)
+                            .timeout(6000)
+                            .get();
+
+                    userNum = tasted.userNum(log.body().className());
+
+                    sauceruserId.putString("USER_ID", userNum);
+                    sauceruserId.apply();
+
+                }
 //                String userNum = log.body().className();
-               Document tastedList = Jsoup.connect(beer + userNum)
+               Document tastedList = Jsoup.connect(beer + settings.getString("USER_ID", "NONE"))
                        .ignoreContentType(true)
                        .timeout(5000)
                        .get();
@@ -93,7 +107,7 @@ public class DisplayBeer extends AppCompatActivity {
             return contentAsString;
         }
 
-        @Override
+            @Override
         protected void onPostExecute(String result) {
 
             // execution of result of Long time consuming operation

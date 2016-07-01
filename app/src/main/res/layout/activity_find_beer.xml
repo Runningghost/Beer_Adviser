@@ -34,11 +34,26 @@
         android:ems="20"
 
         />
+
+    <EditText
+        android:id="@+id/userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/pass"
+        android:inputType="textPersonName"
+        android:hint="userid"
+        android:text=""
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        />
+
+
     <Button
         android:id="@+id/find_beer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pass"
+        android:layout_below="@id/userid"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"
         android:text="@string/find_beer"

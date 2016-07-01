@@ -20,9 +20,13 @@ public class FindBeerActivity extends AppCompatActivity {
         String userText = userView.getText().toString();
         EditText passView = (EditText) findViewById(R.id.pass);
         String passText = passView.getText().toString();
+        EditText userIdView = (EditText) findViewById(R.id.userid);
+        String userIdText = userIdView.getText().toString();
+
         Intent intent = new Intent(this, DisplayBeer.class);
         intent.putExtra("username", userText);
         intent.putExtra("password", passText);
+        intent.putExtra("userid", userIdText);
 
         startActivity(intent);
     }

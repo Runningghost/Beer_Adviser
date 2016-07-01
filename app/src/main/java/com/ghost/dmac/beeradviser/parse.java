@@ -54,8 +54,7 @@ public class parse {
     }
 
     public String userNum(String num) {
-        //String str1 = new String(num);
-        //int j = 75;//length of class
+//where userid starts
         return num.substring(82);
     }
 
