@@ -64,6 +64,7 @@ public class DisplayBeer extends AppCompatActivity {
                         .timeout(6000)
                         .execute();
 
+
                 Document log = Jsoup.connect(url)
                         .cookies(loginForm.cookies())
                         .userAgent(useragent)
