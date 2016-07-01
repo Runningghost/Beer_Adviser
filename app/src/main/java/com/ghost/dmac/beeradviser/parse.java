@@ -6,6 +6,7 @@ public class parse {
 
     public String printNames(String string) {
 
+// find plate number of user
         int pi = 0;
         int pcount = 1;
         while (true) {
@@ -20,7 +21,7 @@ public class parse {
             }
             pi = pend + 1;
         }
-
+// find beer names
         int i = 0;
         int count = 0;
         while (true) {
@@ -56,9 +57,6 @@ public class parse {
         //String str1 = new String(num);
         //int j = 75;//length of class
         return num.substring(82);
-
-
-
     }
 
 }
