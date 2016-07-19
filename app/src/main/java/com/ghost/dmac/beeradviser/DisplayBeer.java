@@ -1,20 +1,16 @@
 package com.ghost.dmac.beeradviser;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.IOException;
-import java.util.Map;
 
 
 public class DisplayBeer extends AppCompatActivity {
@@ -22,12 +18,12 @@ public class DisplayBeer extends AppCompatActivity {
     String url = "https://www.beerknurd.com/user";
     String beer = "http://www.beerknurd.com/api/tasted/list_user/";
 
-    public static final String username = "username";
-    public static final String password = "password";
-    public static final String userid = "userid";
-    SharedPreferences settings= getPreferences(0);
-    SharedPreferences.Editor sauceruserId = settings.edit();
-    //String userNum;
+//    public static final String MyPREFERENCES = "MyPrefs";
+//    public static final String username = "username";
+//    public static final String password = "password";
+//    public static final String userid = "userid";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +36,10 @@ public class DisplayBeer extends AppCompatActivity {
     public class GetBeerInfo extends AsyncTask<String, String, String> {
         TextView beertaste = (TextView) findViewById(R.id.beer_tasted);
         Intent intent = getIntent();
-        String userText = intent.getStringExtra(username);
-        String passText = intent.getStringExtra(password);
-        String userNum = intent.getStringExtra(userid);
+        String userText = intent.getStringExtra(FindBeerActivity.username);
+        String passText = intent.getStringExtra(FindBeerActivity.password);
+        //String userNum = null;//intent.getStringExtra(userid);
+        SharedPreferences sharedpreferences;
 
 
 
@@ -52,14 +49,13 @@ public class DisplayBeer extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             parse tasted = new parse();
-
-
+            sharedpreferences = getSharedPreferences(FindBeerActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
 
             String contentAsString = null;
             try {
 
-                if (!settings.contains("USER_ID")) {
+
                     String useragent = System.getProperty("http.agent");
 
 
@@ -80,14 +76,18 @@ public class DisplayBeer extends AppCompatActivity {
                             .timeout(6000)
                             .get();
 
-                    userNum = tasted.userNum(log.body().className());
+                    FindBeerActivity.userNum = tasted.userNum(log.body().className());
 
-                    sauceruserId.putString("USER_ID", userNum);
-                    sauceruserId.apply();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                }
+                    editor.putString(FindBeerActivity.userid, FindBeerActivity.userNum);
+
+                    editor.apply();
+
+               String test = sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum);
+
 //                String userNum = log.body().className();
-               Document tastedList = Jsoup.connect(beer + settings.getString("USER_ID", "NONE"))
+               Document tastedList = Jsoup.connect(beer + test)
                        .ignoreContentType(true)
                        .timeout(5000)
                        .get();
