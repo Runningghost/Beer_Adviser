@@ -55,7 +55,6 @@ public class DisplayBeer extends AppCompatActivity {
 
                     String useragent = System.getProperty("http.agent");
 
-
                     Connection.Response loginForm = Jsoup.connect(url)
                             .data("username", userText)
                             .data("password", passText)
