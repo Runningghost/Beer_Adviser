@@ -51,7 +51,7 @@ public class DisplayBeer extends AppCompatActivity {
             String contentAsString = null;
             try {
 
-               if (sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum).isEmpty() || !userText.isEmpty()) {
+               if (sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum) == null || !userText.isEmpty()) {
 
                     String useragent = System.getProperty("http.agent");
 
