@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 public class FindBeerActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs";
-    public static final String username = "username";
-    public static final String password = "password";
     public static final String userid = "userid";
-    public static String userNum = "number";
+    public static String userNum = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +30,15 @@ public class FindBeerActivity extends AppCompatActivity {
         String userText = userView.getText().toString();
         EditText passView = (EditText) findViewById(R.id.pass);
         String passText = passView.getText().toString();
-        EditText userIdView = (EditText) findViewById(R.id.userid);
-        String userIdText = userIdView.getText().toString();
+        //EditText userIdView = (EditText) findViewById(R.id.userid);
+        //String userIdText = userIdView.getText().toString();
 
         Intent intent = new Intent(this, DisplayBeer.class);
         intent.putExtra("username", userText);
         intent.putExtra("password", passText);
-        if ( userIdText != null) {
-            intent.putExtra("userid", userIdText);
-        }
+        //if ( userIdText != null) {
+        //    intent.putExtra("userid", userIdText);
+        //}
 
         startActivity(intent);
     }

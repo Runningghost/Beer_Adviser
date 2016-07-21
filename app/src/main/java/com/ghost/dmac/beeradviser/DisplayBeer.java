@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
 
@@ -17,13 +18,8 @@ public class DisplayBeer extends AppCompatActivity {
 
     String url = "https://www.beerknurd.com/user";
     String beer = "http://www.beerknurd.com/api/tasted/list_user/";
-
-//    public static final String MyPREFERENCES = "MyPrefs";
-//    public static final String username = "username";
-//    public static final String password = "password";
-//    public static final String userid = "userid";
-
-
+    String username = "username";
+    String password = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +32,8 @@ public class DisplayBeer extends AppCompatActivity {
     public class GetBeerInfo extends AsyncTask<String, String, String> {
         TextView beertaste = (TextView) findViewById(R.id.beer_tasted);
         Intent intent = getIntent();
-        String userText = intent.getStringExtra(FindBeerActivity.username);
-        String passText = intent.getStringExtra(FindBeerActivity.password);
+        String userText = intent.getStringExtra(username);
+        String passText = intent.getStringExtra(password);
         //String userNum = null;//intent.getStringExtra(userid);
         SharedPreferences sharedpreferences;
 
@@ -55,6 +51,7 @@ public class DisplayBeer extends AppCompatActivity {
             String contentAsString = null;
             try {
 
+               if (sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum).isEmpty() || !userText.isEmpty()) {
 
                     String useragent = System.getProperty("http.agent");
 
@@ -83,11 +80,11 @@ public class DisplayBeer extends AppCompatActivity {
                     editor.putString(FindBeerActivity.userid, FindBeerActivity.userNum);
 
                     editor.apply();
-
-               String test = sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum);
+                    }
+                String id = sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum);
 
 //                String userNum = log.body().className();
-               Document tastedList = Jsoup.connect(beer + test)
+               Document tastedList = Jsoup.connect(beer + id)
                        .ignoreContentType(true)
                        .timeout(5000)
                        .get();
