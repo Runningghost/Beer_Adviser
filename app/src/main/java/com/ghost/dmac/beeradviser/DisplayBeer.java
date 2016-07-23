@@ -12,6 +12,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
 
 
 public class DisplayBeer extends AppCompatActivity {
@@ -55,16 +60,24 @@ public class DisplayBeer extends AppCompatActivity {
 
                     String useragent = System.getProperty("http.agent");
 
+
+
+                   try {
+                       HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                   } catch(KeyManagementException | NoSuchAlgorithmException e) {
+                       e.printStackTrace();
+                   }
+
                     Connection.Response loginForm = Jsoup.connect(url)
                             .data("username", userText)
                             .data("password", passText)
                             .data("op", "Log+in")
                             .data("form_id", "custom_login_form")
                             .userAgent(useragent)
+                            .validateTLSCertificates(false)
                             .method(Connection.Method.POST)
                             .timeout(6000)
                             .execute();
-
 
                     Document log = Jsoup.connect(url)
                             .cookies(loginForm.cookies())

@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     // jsoup HTML parser library @ http://jsoup.org/
     compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.google.android.gms:play-services:6.1.+'
     compile 'com.google.code.gson:gson:2.2.4'
 
 }
