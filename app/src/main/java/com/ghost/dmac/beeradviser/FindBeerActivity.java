@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+
+import java.security.AccessController;
+
 
 public class FindBeerActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs";
@@ -18,6 +23,15 @@ public class FindBeerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            com.google.android.gms.security.ProviderInstaller.installIfNeeded(getApplicationContext());
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_find_beer);
         SharedPreferences ntest = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String newid = ntest.getString(userid, userNum);
