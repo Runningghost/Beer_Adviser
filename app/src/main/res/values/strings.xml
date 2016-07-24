@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Beer Adviser</string>
     <string name="find_beer">Find Beer!</string>
+    <string name="user">User Name</string>
+    <string name="pass">Password</string>
+    <string name="userid">UserId</string>
 </resources>
+

@@ -9,20 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSocketFactory;
 
 
 public class DisplayBeer extends AppCompatActivity {
 
-    String url = "https://www.beerknurd.com/user";
-    String beer = "http://www.beerknurd.com/api/tasted/list_user/";
+    String loginUrl = "https://www.beerknurd.com/user";
+    String tastedBeerUrl = "http://www.beerknurd.com/api/tasted/list_user/";
     String username = "username";
     String password = "password";
 
@@ -31,7 +29,7 @@ public class DisplayBeer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_beer_info);
         GetBeerInfo website = new GetBeerInfo();
-        website.execute(url);
+        website.execute(loginUrl);
     }
 
     public class GetBeerInfo extends AsyncTask<String, String, String> {
@@ -43,10 +41,6 @@ public class DisplayBeer extends AppCompatActivity {
         SharedPreferences sharedpreferences;
 
 
-
-        // Given a URL, establishes an HttpUrlConnection and retrieves
-        // the web page content as a InputStream, which it returns as
-        // a string.
         @Override
         protected String doInBackground(String... params) {
             parse tasted = new parse();
@@ -60,15 +54,13 @@ public class DisplayBeer extends AppCompatActivity {
 
                     String useragent = System.getProperty("http.agent");
 
-
-
                    try {
                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
                    } catch(KeyManagementException | NoSuchAlgorithmException e) {
                        e.printStackTrace();
                    }
 
-                    Connection.Response loginForm = Jsoup.connect(url)
+                    Connection.Response loginForm = Jsoup.connect(loginUrl)
                             .data("username", userText)
                             .data("password", passText)
                             .data("op", "Log+in")
@@ -79,37 +71,28 @@ public class DisplayBeer extends AppCompatActivity {
                             .timeout(6000)
                             .execute();
 
-                    Document log = Jsoup.connect(url)
+                    Document SaucerHomeScreen = Jsoup.connect(loginUrl)
                             .cookies(loginForm.cookies())
                             .userAgent(useragent)
                             .timeout(6000)
                             .get();
 
-                    FindBeerActivity.userNum = tasted.userNum(log.body().className());
+                    FindBeerActivity.userNum = tasted.userNum(SaucerHomeScreen.body().className());
 
                     SharedPreferences.Editor editor = sharedpreferences.edit();
-
                     editor.putString(FindBeerActivity.userid, FindBeerActivity.userNum);
-
                     editor.apply();
                     }
-                String id = sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum);
+                String tastedBeerId = sharedpreferences.getString(FindBeerActivity.userid, FindBeerActivity.userNum);
 
-//                String userNum = log.body().className();
-               Document tastedList = Jsoup.connect(beer + id)
+
+               Document tastedList = Jsoup.connect(tastedBeerUrl + tastedBeerId)
                        .ignoreContentType(true)
                        .timeout(5000)
                        .get();
 
                 contentAsString = tasted.printNames(tastedList.text());
-
-
-
-//                contentAsString = log.html();
-//                contentAsString = userNum;
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }

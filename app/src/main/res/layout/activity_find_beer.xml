@@ -9,17 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ghost.dmac.beeradviser.FindBeerActivity">
 
-
     <EditText
         android:id="@+id/user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:inputType="textPersonName"
-        android:hint="Username"
+        android:hint="@string/user"
         android:text=""
         android:layout_marginTop="18dp"
-        android:ems="20" />
+        android:ems="20"
+        />
 
     <EditText
         android:id="@+id/pass"
@@ -28,26 +28,23 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/user"
         android:inputType="textWebPassword"
-        android:hint="Password"
+        android:hint="@string/pass"
         android:text=""
         android:layout_marginTop="18dp"
         android:ems="20"
-
         />
 
-    <EditText
+    <TextView
         android:id="@+id/userid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/pass"
-        android:inputType="textPersonName"
-        android:hint="userid"
+        android:hint="@string/userid"
         android:text=""
         android:layout_marginTop="18dp"
         android:ems="10"
         />
-
 
     <Button
         android:id="@+id/find_beer"
@@ -57,9 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"
         android:text="@string/find_beer"
-        android:onClick="onClickFindBeer"/>
-
-
-
+        android:onClick="onClickFindBeer"
+        />
 
 </RelativeLayout>
