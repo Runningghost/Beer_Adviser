@@ -43,7 +43,7 @@ public class DisplayBeer extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            parse tasted = new parse();
+            BeerUtil tasted = new BeerUtil();
             sharedpreferences = getSharedPreferences(FindBeerActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
 
@@ -92,7 +92,7 @@ public class DisplayBeer extends AppCompatActivity {
                        .get();
 
                 contentAsString = tasted.printNames(tastedList.text());
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
