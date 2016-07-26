@@ -1,12 +1,12 @@
 package com.ghost.dmac.beeradviser;
 
-public class parse {
+public class BeerUtil {
     StringBuilder beerList = new StringBuilder();
     int brew_plate;
 
     public String printNames(String string) {
 
-// find plate number of user
+// find plate number for user
         int pi = 0;
         int pcount = 1;
         while (true) {
