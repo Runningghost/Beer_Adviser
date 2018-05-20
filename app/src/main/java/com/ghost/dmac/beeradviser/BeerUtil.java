@@ -36,16 +36,15 @@ public class BeerUtil {
             int plate_end = string.indexOf("\",\"", plate_start);
             int plateNum = Integer.parseInt(string.substring(plate_start, plate_end));
 
-            boolean noname = beerName.equals( "ull,\"store_id\":\"13878");
 
-                if (pcount == plateNum) {
-                    if(!noname) {
-                    beerList.append(beerName).append('\n');
 
-                    count++;
+            if (pcount == plateNum) {
+                beerList.append(beerName).append('\n');
+                count++;
                 }
-                i = end + 1;
-            }
+
+            i = end + 1;
+
         }
 
         String amount = Integer.toString(count) + '\n';
